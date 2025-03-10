@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.js": "/static/js/main.2a13e170.js",
-    "index.html": "/index.html",
-    "main.2a13e170.js.map": "/static/js/main.2a13e170.js.map"
+    "main.js": "/bm-client/static/js/main.2a13e170.js",
+    "index.html": "/bm-client/index.html",
+    "main.2a13e170.js.map": "/bm-client/static/js/main.2a13e170.js.map"
   },
   "entrypoints": [
     "static/js/main.2a13e170.js"
