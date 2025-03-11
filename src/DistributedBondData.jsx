@@ -7,10 +7,12 @@ import ClipboardJS from "clipboard";
 
 export const PartialBondsInfo = ({formData, bondsData, partSize}) => {
     const partialMas = []
-    console.log(bondsData);
-    for (let i = 0; i < bondsData.length; i+=partSize) {
-        let mas = bondsData.slice(i, Math.min(i+partSize, bondsData.length));
-        partialMas.push([...mas]);
+
+    let bd = [...bondsData].reverse();
+    console.log(bd);
+    for (let i = 0; i < bd.length; i+=partSize) {
+        let mas = bd.slice(i, Math.min(i+partSize, bondsData.length));
+        partialMas.push([...mas].reverse());
     }
     const copyToClipboard = () => {
         var clipboard = new ClipboardJS('.copy-btn');

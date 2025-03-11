@@ -5,11 +5,11 @@ const CriteriaDescription = ({ formData }) => {
         const descriptions = [];
 
         // Проверка цен
-        if (formData.priceFrom !== null && formData.priceTo !== null) {
+        if (formData.priceFrom !== null && formData.priceFrom !== "" && formData.priceTo !== null && formData.priceTo !== "") {
             descriptions.push(`📌 Цена от ${formData.priceFrom} руб. до ${formData.priceTo} руб.`);
-        } else if (formData.priceFrom !== null) {
+        } else if (formData.priceFrom !== null && formData.priceFrom !== "" && formData.priceFrom !== 0) {
             descriptions.push(`📌 Цена от ${formData.priceFrom} руб.`);
-        } else if (formData.priceTo !== null) {
+        } else if (formData.priceTo !== null && formData.priceTo !== "" && formData.priceTo !== 0) {
             descriptions.push(`📌 Цена до ${formData.priceTo} руб.`);
         }
 
@@ -71,7 +71,7 @@ const CriteriaDescription = ({ formData }) => {
 
         // Другие критерии
         if (formData.nominal !== null) {
-            descriptions.push(`📌 Номинал: ${formData.nominal}`);
+            descriptions.push(`📌 Номинал: ${formData.nominal} руб.`);
         }
 
         // if (formData.currency) {
