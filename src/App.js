@@ -14,6 +14,7 @@ import {
 import CriteriaDescription from "./CriterialDescription";
 import ClipboardJS from "clipboard";
 import BondsInfo from "./BondsInfo";
+import {PartialBondsInfo} from "./DistributedBondData";
 
 const BondsForm = () => {
   const [formData, setFormData] = useState({
@@ -84,19 +85,6 @@ const BondsForm = () => {
     }
   };
 
-
-
-  const copyToClipboard = () => {
-    var clipboard = new ClipboardJS('.copy-btn');
-
-    clipboard.on('success', function(e) {
-      console.log('Текст успешно скопирован!');
-    });
-
-    clipboard.on('error', function(e) {
-      console.error('Ошибка при копировании текста:', e);
-    });
-  };
 
   return (
       <Box p={4} maxW="3xl" mx="auto">
@@ -171,20 +159,7 @@ const BondsForm = () => {
             </Box>
           </HStack>
         </form>
-
-        {/* Отображение данных */}
-        <Box p={4} mt={4} border="1px solid #ccc" borderRadius="md" id={"final"}>
-          <p>😉 Приветствую, выкладываю подборку облигаций.<br /></p>
-          <CriteriaDescription formData={formData} />
-          <p>
-            <br />Итак, начинаем 🍻
-          </p>
-          <BondsInfo bondsData={bondsData} />
-          {/* Кнопка "Копировать" */}
-          <Button className={"copy-btn"} data-clipboard-target={"#final"} colorScheme="teal" onClick={copyToClipboard}>
-            Копировать
-          </Button>
-        </Box>
+        <PartialBondsInfo bondsData={bondsData} formData={formData} partSize={13} />
       </Box>
   );
 };
