@@ -19,6 +19,7 @@ jobs:
           script: |
             cd ~/bm2
             pm2 stop "react-app"
+            pm2 delete "react-app"
             git pull origin
             npm run build
             pm2 start npx --name "react-app" -- serve -s build -l 3000
