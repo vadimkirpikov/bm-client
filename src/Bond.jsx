@@ -3,21 +3,36 @@ import React, {useState} from 'react';
 const Bond = ({bond}) => {
     const [r, setR] = useState();
     const currentDate = new Date();
-    let date = new Date(bond.mainInfo.maturityDate)
-    const delta = date - currentDate;
+    const formatDate = (date, em) => {
+        date = date.toLocaleDateString("ru-RU")
+        let mas = ["0️⃣", "1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣"]
+        for (let i = 0; i<10; i++) {
+            date = date.replaceAll(`${i}`, mas[i])
+        }
+        date = date.replaceAll(".", em)
+        return date;
+    }
+    const getDayDiff = (date, currentDate) => {
+        const delta = date - currentDate;
+        const daysDifference = Math.floor(delta / (1000 * 3600 * 24));
+        let dayText = "дней"
+        if ((daysDifference%10>=2 && daysDifference%10<=4 && daysDifference%100>21) || (daysDifference%100>=2 && daysDifference%100<=4)) {
+            dayText = "дня"
+        } else if ((daysDifference%10 === 1 && daysDifference%100>=21) || daysDifference%100 === 1) {
+            dayText = "день"
+        }
+        return {dayDiff: daysDifference, dayText: dayText};
+    }
+    let date1 = new Date(bond.mainInfo.maturityDate)
+    const delta = date1 - currentDate;
     const daysDifference = Math.floor(delta / (1000 * 3600 * 24));
-    date = date.toLocaleDateString("ru-RU")
-    let mas = ["0️⃣", "1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣"]
-    for (let i = 0; i<10; i++) {
-        date = date.replaceAll(`${i}`, mas[i])
+    const eventTypes = {
+        "C": "Колл-опцион",
+        "A": "Оферта(PUT)",
+        "O": "Оферта(CALL)"
     }
-    date = date.replaceAll(".", "🟢")
-    let dayText = "дней"
-    if ((daysDifference%10>=2 && daysDifference%10<=4 && daysDifference%100>21) || (daysDifference%100>=2 && daysDifference%100<=4)) {
-        dayText = "дня"
-    } else if ((daysDifference%10 === 1 && daysDifference%100>=21) || daysDifference%100 === 1) {
-        dayText = "день"
-    }
+
+    const mtDate = getDayDiff(date1, currentDate);
     return (
         <div>
             <p>
@@ -30,8 +45,9 @@ const Bond = ({bond}) => {
             {bond.mainInfo.floatingCouponFlag ? (<p>
                 ♻️ Флоатер: КС + {(bond.coupon.value_prc - 21).toFixed(2)}%
             </p>) : ""}
+            {bond.callEvent ? <p>🤬 {eventTypes[bond.callEvent.type]}: {formatDate(new Date(bond.callEvent.payDate), "❕")} </p>: ""}
             <p>
-                🗓️ До: {date} ({daysDifference} {dayText})
+                🗓️ Погашение: {formatDate(date1, "🥃")} ({mtDate.dayDiff} {mtDate.dayText})
             </p>
             <p>
                 🔸 Цена: {bond.price.price} руб.
