@@ -19,6 +19,7 @@ import {PartialBondsInfo} from "./DistributedBondData";
 const BondsForm = () => {
   const [formData, setFormData] = useState({
     currency: "rub",
+    nominalCurrency: "rub",
     priceFrom: 0,
     priceTo: 1100,
     nominal: 1000,
@@ -143,7 +144,7 @@ const BondsForm = () => {
                         {key}
                       </FormLabel>
                       <Input
-                          type={["currency", "ratingFrom", "ratingTo", "bondType"].includes(key) ? "text" : "number"}
+                          type={["currency", "ratingFrom", "ratingTo", "bondType", "nominalCurrency"].includes(key) ? "text" : "number"}
                           name={key}
                           value={formData[key] || null}
                           onChange={handleChange}

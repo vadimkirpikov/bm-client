@@ -4,14 +4,15 @@ const Bond = ({bond}) => {
     const [r, setR] = useState();
     const currentDate = new Date();
     const formatDate = (date, em) => {
-        date = date.toLocaleDateString("ru-RU")
-        let mas = ["0️⃣", "1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣"]
-        for (let i = 0; i<10; i++) {
-            date = date.replaceAll(`${i}`, mas[i])
+        date = date.toLocaleDateString("ru-RU");
+        date = date.slice(0, 6) + date.slice(8, 10);
+        let mas = ["0️⃣", "1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣"];
+        for (let i = 0; i < 10; i++) {
+            date = date.replaceAll(`${i}`, mas[i]);
         }
-        date = date.replaceAll(".", em)
+        date = date.replaceAll(".", em);
         return date;
-    }
+    };
     const getDayDiff = (date, currentDate) => {
         const delta = date - currentDate;
         const daysDifference = Math.floor(delta / (1000 * 3600 * 24));
@@ -27,9 +28,15 @@ const Bond = ({bond}) => {
     const delta = date1 - currentDate;
     const daysDifference = Math.floor(delta / (1000 * 3600 * 24));
     const eventTypes = {
-        "C": "Колл-опцион",
-        "A": "Оферта(PUT)",
-        "O": "Оферта(CALL)"
+        "C": "Опцион",
+        "A": "Оферта",
+        "O": "Оферта"
+    }
+    const values = {
+        "rub": "руб.",
+        "usd": "💲",
+        "cny": "💴",
+        "eur": "💶"
     }
 
     const mtDate = getDayDiff(date1, currentDate);
@@ -42,16 +49,16 @@ const Bond = ({bond}) => {
                 📜 Название: {bond.mainInfo.name}
             </p>
             {bond.mainInfo.forQualInvestorFlag ? (<p>⚠️ Для квалов</p>) : ""}
+            {bond.callEvent ? <p>⚠️ {eventTypes[bond.callEvent.type]}: {formatDate(new Date(bond.callEvent.payDate), "❕")} </p>: ""}
             {bond.mainInfo.floatingCouponFlag ? (<p>
                 ♻️ Флоатер: КС + {(bond.coupon.value_prc - 21).toFixed(2)}%
             </p>) : ""}
-            {bond.callEvent ? <p>🤬 {eventTypes[bond.callEvent.type]}: {formatDate(new Date(bond.callEvent.payDate), "❕")} </p>: ""}
             <p>
-                🗓️ Погашение: {formatDate(date1, "🥃")} ({mtDate.dayDiff} {mtDate.dayText})
+                🗓️ До: {formatDate(date1, "🍀")} ({mtDate.dayDiff} {mtDate.dayText})
             </p>
-            <p>
-                🔸 Цена: {bond.price.price} руб.
-            </p>
+            {/*<p>*/}
+            {/*    🔸 Цена: {bond.price.price} {values[bond.mainInfo.nominal.currency]}*/}
+            {/*</p>*/}
             <p>
                 🔸 Ставка: {bond.coupon.value_prc}%
             </p>
@@ -59,17 +66,17 @@ const Bond = ({bond}) => {
                 🔸 НКД: {bond.mainInfo.aciValue.toFixed(2)} руб.
             </p>
             <p>
-                🔸 Размер купона: {bond.coupon.value} руб.
+                🔸 Размер купона: {bond.coupon.value} {values[bond.mainInfo.nominal.currency]}
             </p>
             <p>
                 🔸 Амортизация: {bond.mainInfo.amortizationFlag ? "✔️" : "❌"}
             </p>
             <p>
-                🔸 Рейтинг: {bond.rating
+                🔸 Рейтинг: {bond.rating ? bond.rating
                 .replaceAll("A", "🅰️")
                 .replaceAll("B", "🅱️")
                 .replaceAll("+", "➕")
-                .replaceAll("-", "➖")}
+                .replaceAll("-", "➖") : "➖"}
             </p>
             <p><br/></p>
         </div>
