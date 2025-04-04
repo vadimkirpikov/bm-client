@@ -23,6 +23,7 @@ jobs:
             git pull origin
             npm install
             npm run build
+            pm2 delete all
             pm2 start npx --name "react-app" -- serve -s build -l 3000
             
             
