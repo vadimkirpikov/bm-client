@@ -1,13 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { ChakraProvider } from '@chakra-ui/react'; // Импорт ChakraProvider
-import App from './App'; // Ваш компонент приложения
+import { ChakraProvider } from '@chakra-ui/react';
+import App from './App';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import MonthReport from "./MonthReport";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>
         <ChakraProvider>
-            <App />
+            <Router>
+                <Routes>
+                    <Route path="/monthreport" element={<MonthReport />} />
+                    <Route path="/" element={<App />} />
+                    <Route path="/main" element={<App />} />
+                </Routes>
+            </Router>
         </ChakraProvider>
     </React.StrictMode>
 );

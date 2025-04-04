@@ -2,7 +2,7 @@
   "name": "bonds-manager-client",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://vadimkirpikov.github.io/bm-client",
+  "homepage": "https://vadimkirpikov.github.io",
   "dependencies": {
     "@chakra-ui/react": "^2.10.6",
     "@emotion/react": "^11.14.0",
@@ -11,6 +11,7 @@
     "framer-motion": "^12.4.10",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-router-dom": "^7.4.1",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
   },
