@@ -18,8 +18,6 @@ jobs:
           port: 22
           script: |
             cd ~/bm2
-            pm2 stop "react-app"
-            pm2 delete "react-app"
             git pull origin
             npm install
             npm run build
