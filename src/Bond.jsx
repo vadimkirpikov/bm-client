@@ -4,15 +4,25 @@ const Bond = ({bond}) => {
     const [r, setR] = useState();
     const currentDate = new Date();
     const formatDate = (date, em) => {
-        date = date.toLocaleDateString("ru-RU");
-        date = date.slice(0, 6) + date.slice(8, 10);
+        // Получаем компоненты даты вручную
+        let day = date.getDate().toString().padStart(2, '0');
+        let month = (date.getMonth() + 1).toString().padStart(2, '0');
+        let year = date.getFullYear().toString().slice(-2); // последние две цифры
+
+        let formatted = `${day}.${month}.${year}`;
+
+        // Заменяем цифры на emoji
         let mas = ["0️⃣", "1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣"];
         for (let i = 0; i < 10; i++) {
-            date = date.replaceAll(`${i}`, mas[i]);
+            formatted = formatted.replaceAll(`${i}`, mas[i]);
         }
-        date = date.replaceAll(".", em);
-        return date;
+
+        // Заменяем точки на переданный символ
+        formatted = formatted.replaceAll(".", em);
+
+        return formatted;
     };
+
     const getDayDiff = (date, currentDate) => {
         const delta = date - currentDate;
         const daysDifference = Math.floor(delta / (1000 * 3600 * 24));
@@ -28,55 +38,52 @@ const Bond = ({bond}) => {
     const delta = date1 - currentDate;
     const daysDifference = Math.floor(delta / (1000 * 3600 * 24));
     const eventTypes = {
-        "C": "Опцион",
-        "A": "Оферта",
-        "O": "Оферта"
-    }
-    const values = {
-        "rub": "руб.",
-        "usd": "💲",
-        "cny": "💴",
-        "eur": "💶"
+        "C": "Колл-опцион",
+        "A": "Оферта(PUT)",
+        "O": "Оферта(CALL)"
     }
 
     const mtDate = getDayDiff(date1, currentDate);
     return (
         <div>
             <p>
-                🏷️ Тикер: ${bond.mainInfo.ticker},
-            </p>
-            <p>
-                📜 Название: {bond.mainInfo.name}
+                📜 ${bond.mainInfo.ticker} {bond.mainInfo.name}
             </p>
             {bond.mainInfo.forQualInvestorFlag ? (<p>⚠️ Для квалов</p>) : ""}
-            {bond.callEvent ? <p>⚠️ {eventTypes[bond.callEvent.type]}: {formatDate(new Date(bond.callEvent.payDate), "❕")} </p>: ""}
             {bond.mainInfo.floatingCouponFlag ? (<p>
                 ♻️ Флоатер: КС + {(bond.coupon.value_prc - 21).toFixed(2)}%
             </p>) : ""}
+            {bond.callEvent ? <p>🤬 {eventTypes[bond.callEvent.type]}: {formatDate(new Date(bond.callEvent.payDate), "❕")} </p>: ""}
             <p>
-                🗓️ До: {formatDate(date1, "🍀")} ({mtDate.dayDiff} {mtDate.dayText})
+                🗓️ Погашение: {formatDate(date1, "💸")} ({mtDate.dayDiff} {mtDate.dayText})
             </p>
             {/*<p>*/}
-            {/*    🔸 Цена: {bond.price.price} {values[bond.mainInfo.nominal.currency]}*/}
+            {/*    🔸 Цена: {bond.price.price} руб.*/}
             {/*</p>*/}
             <p>
                 🔸 Ставка: {bond.coupon.value_prc}%
             </p>
-            <p>
+            {/*            <p>
                 🔸 НКД: {bond.mainInfo.aciValue.toFixed(2)} руб.
-            </p>
+            </p>*/}
+            <p> 🔸 След. купон: {formatDate(new Date(bond.coupon.eventDate), "💸")} </p>
             <p>
-                🔸 Размер купона: {bond.coupon.value} {values[bond.mainInfo.nominal.currency]}
+                🔸 Размер купона: {bond.coupon.value} руб.
             </p>
             <p>
                 🔸 Амортизация: {bond.mainInfo.amortizationFlag ? "✔️" : "❌"}
             </p>
+            {bond.mainInfo.amortizationFlag && <p>
+                🔹 Ближайшая амортизация: {formatDate(new Date(bond.startMtyDate.eventDate), "💸")}
+                <p> 🔹 Доля: {bond.startMtyDate.value} %</p>
+
+            </p>}
             <p>
-                🔸 Рейтинг: {bond.rating ? bond.rating
+                🔸 Рейтинг: {bond.rating
                 .replaceAll("A", "🅰️")
                 .replaceAll("B", "🅱️")
                 .replaceAll("+", "➕")
-                .replaceAll("-", "➖") : "➖"}
+                .replaceAll("-", "➖")}
             </p>
             <p><br/></p>
         </div>

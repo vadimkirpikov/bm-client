@@ -30,14 +30,10 @@ export const PartialBondsInfo = ({formData, bondsData, partSize}) => {
         <>
             {partialMas.map((item, key) =>
                 <Box p={4} mt={4} border="1px solid #ccc" borderRadius="md" id={"final"+key}>
-                <p>😉 Приветствую, выкладываю подборку облигаций.<br /></p>
+                <p>☕ Приветствую, выкладываю подборку облигаций.<br /></p>
                 <CriteriaDescription formData={formData} />
-                    <p>
-                        <br />Часть {mas[key]} <br/>
-                    </p>
-                <p>
-                    <br/>Итак, начинаем 🍻 <br/>
-                </p>
+                    <br />
+                    <br/>
                 <BondsInfo bondsData={item} />
                 {/* Кнопка "Копировать" */}
                 <Button className={"copy-btn"} data-clipboard-target={`#${"final"+key}`} colorScheme="teal" onClick={copyToClipboard}>
