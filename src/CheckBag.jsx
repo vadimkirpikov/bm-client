@@ -5,7 +5,7 @@ import Portfolio from "./Portfolio";
 const FinalPortfolio = () => {
     const [data, setData] = useState(null)
     useEffect(() => {
-        fetch("http://localhost:8000/bag").then((response) => {
+        fetch("http://194.87.199.155:8000/bag").then((response) => {
             if (response.ok) {
                 response.json().then((data1) => {
                     setData(data1);
