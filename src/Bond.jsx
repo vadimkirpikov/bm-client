@@ -46,7 +46,7 @@ const Bond = ({ bond }) => {
 
     return (
         <div>
-            <p>📜 {bond?.mainInfo?.ticker || '❗'} {bond?.mainInfo?.name || '❗'}</p>
+            <p>📜 ${bond?.mainInfo?.ticker || '❗'} {bond?.mainInfo?.name || '❗'}</p>
 
             {bond?.mainInfo?.forQualInvestorFlag && <p>⚠️ Для квалов</p>}
 
