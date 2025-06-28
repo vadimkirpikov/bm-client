@@ -52,12 +52,12 @@ const Bond = ({ bond }) => {
 
             {bond?.mainInfo?.floatingCouponFlag && (
                 <p>
-                    ♻️ Флоатер: КС + {((bond?.coupon?.value_prc ?? 21) - 21).toFixed(2)}%
+                    ♻️ Флоатер: КС + {((bond?.coupon?.value_prc) - 20).toFixed(2)}%
                 </p>
             )}
 
             {bond?.callEvent &&
-                <p>🤬 {eventTypes[bond.callEvent?.type] || "❗ Неизв. тип"}: {formatDate(new Date(bond.callEvent?.payDate), "❕")} </p>
+                <p>❗ {eventTypes[bond.callEvent?.type] || "❗ Неизв. тип"}: {formatDate(new Date(bond.callEvent?.payDate), "❕")} </p>
             }
 
             <p>🗓️ Погашение: {formatDate(maturityDate, "💸")} ({mtDate.dayDiff} {mtDate.dayText})</p>
@@ -83,6 +83,9 @@ const Bond = ({ bond }) => {
                 .replaceAll("B", "🅱️")
                 .replaceAll("+", "➕")
                 .replaceAll("-", "➖")}
+            </p>
+            <p>
+                🔸 Плечо: {(bond?.marginAble) ? "✅" : "❌"}
             </p>
 
             <p><br /></p>
