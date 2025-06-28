@@ -12,7 +12,7 @@ const Bond = ({ bond }) => {
         let year = date.getFullYear().toString().slice(-2);
 
         let formatted = `${day}.${month}.${year}`;
-
+        return formatted;
         const mas = ["0️⃣", "1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣"];
         for (let i = 0; i < 10; i++) {
             formatted = formatted.replaceAll(`${i}`, mas[i]);
