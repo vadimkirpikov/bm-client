@@ -95,7 +95,7 @@ const BondsForm = () => {
             {/* Форма слева */}
             <Box flex="1" display="flex" flexDirection="column" gap={4}>
               {Object.keys(formData).map((key, index) => {
-                if (key === "availability" || key === "isFloater" || key === "amortizationFlag" || "marginAble") {
+                if (key === "availability" || key === "isFloater" || key === "amortizationFlag" || key === "marginAble") {
                   return (
                       <FormControl key={index}>
                         <FormLabel fontSize="sm" fontWeight="semibold">
